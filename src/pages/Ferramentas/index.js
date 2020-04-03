@@ -1,44 +1,47 @@
 import React, { Component } from 'react';
 import { 
-Container, 
-Table,
-Button,
-Form,
-FormGroup,
-Label,
-Input,
+    Container, 
+    Table,
+    Button,
+    Form,
+    FormGroup,
+    Label,
+    Input,
 } from 'reactstrap';
 
-class Ferramentas extends Component {
+export default class Usuarios extends Component {
 
-    // //useState para o input user
-    // const [user, setUser] = useState('');
+    lsUsersKey = 'supera-project-tools';
 
-    // //useState para o input password
-    // const [pass, setPass] = useState('');
+    constructor(props) {
+        super(props);
 
-    // //function para setar o user
-    // const handleUser= (e) => {
-    //     setUser(e.target.value);
-    // }
-
-    // //function para setar a password
-    // const handlePass= (e) => {
-    //     setPass(e.target.value);
-    // }
-
-    handleSubmit = (e) => {
-        e.preventDefault(); 
-        const userName = e.target.elements.userName.value;
-        const tool = e.target.elements.tool.value;
-        localStorage.setItem('@supera-project/userName', userName);
-        window.location.reload();
+        this.state = {
+            tools: []
+        }
     }
 
-    render(){
+    componentDidMount() {
+        const tools = JSON.parse(localStorage.getItem(this.lsUsersKey));
+        if (tools !== null) {
+            this.setState({
+                tools
+            });
+        }
+    }
 
-        const userName = localStorage.getItem('@supera-project/userName');
-        const tool = localStorage.getItem('@supera-project/userName');
+    handleSubmit = async (e) => {
+        e.preventDefault();
+        await this.setState({
+            tools: [
+                ...this.state.tools,
+                e.target.elements.tool.value
+            ]
+        });
+        localStorage.setItem(this.lsUsersKey, JSON.stringify(this.state.tools));
+    }
+
+    render() {
 
         return (
             <>
@@ -46,13 +49,13 @@ class Ferramentas extends Component {
                     <h3>+Cadastro de Ferramentas</h3>
                     <Form onSubmit={this.handleSubmit}>
                         <FormGroup>
-                            <Label for="userName">Usuário:</Label>
-                            <Input type="text" name="userName" id="userName" placeholder="Insira um nome de usuário"/>
-                        </FormGroup>
-                        <FormGroup>
                             <Label for="tool">Ferramenta:</Label>
-                            <Input type="text" name="tool" id="tool" placeholder="Insira uma ferramenta"/>
+                            <Input type="text" name="tool" id="tool" placeholder="Insira um nome de ferramenta"/>
                         </FormGroup>
+                        {/* <FormGroup>
+                            <Label for="pass-user">Senha:</Label>
+                            <Input type="password" name="password" id="pass-user" placeholder="Insira uma senha"/>
+                        </FormGroup> */}
                         <Button type="submit">Cadastrar</Button>
                     </Form>
 
@@ -61,19 +64,21 @@ class Ferramentas extends Component {
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Usuário</th>
                                 <th>Ferramenta</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>{userName}</td>
-                                <td>{tool}</td>
-                                <td>Editar / Remover</td>
-                            </tr>
+                            {
+                                this.state.tools.map((tool, index) => (
+                                    <tr key={index}>
+                                        <th scope="row">{index + 1}</th>
+                                        <td>{tool}</td>
+                                        <td>Editar / Remover</td>
+                                    </tr>
+                                ))
+                            }
                         </tbody>
                     </Table>
                 </Container>
@@ -81,5 +86,3 @@ class Ferramentas extends Component {
         );
     }
 }
-
-export default Ferramentas;

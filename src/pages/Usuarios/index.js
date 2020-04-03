@@ -1,42 +1,47 @@
 import React, { Component } from 'react';
 import { 
-Container, 
-Table,
-Button,
-Form,
-FormGroup,
-Label,
-Input,
+    Container, 
+    Table,
+    Button,
+    Form,
+    FormGroup,
+    Label,
+    Input,
 } from 'reactstrap';
 
-class Usuarios extends Component {
+export default class Usuarios extends Component {
 
-    // //useState para o input user
-    // const [user, setUser] = useState('');
+    lsUsersKey = 'supera-project-users'; // key do localStorage
 
-    // //useState para o input password
-    // const [pass, setPass] = useState('');
+    constructor(props) {
+        super(props);
 
-    // //function para setar o user
-    // const handleUser= (e) => {
-    //     setUser(e.target.value);
-    // }
-
-    // //function para setar a password
-    // const handlePass= (e) => {
-    //     setPass(e.target.value);
-    // }
-
-    handleSubmit = (e) => {
-        e.preventDefault(); 
-        const userName = e.target.elements.userName.value;
-        localStorage.setItem('@supera-project/userName', userName);
-        window.location.reload();
+        this.state = { // array de users
+            users: []
+        }
     }
 
-    render(){
+    componentDidMount() { 
+        const users = JSON.parse(localStorage.getItem(this.lsUsersKey));
+        if (users !== null) {
+            this.setState({
+                users
+            });
+        }
+    }
 
-        const userName = localStorage.getItem('@supera-project/userName');
+    handleSubmit = async (e) => {
+        e.preventDefault();
+        await this.setState({
+            users: [
+                ...this.state.users,
+                e.target.elements.userName.value
+            ]
+        });
+        localStorage.setItem(this.lsUsersKey, JSON.stringify(this.state.users));
+    }
+
+    render() {
 
         return (
             <>
@@ -65,11 +70,15 @@ class Usuarios extends Component {
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>{userName}</td>
-                                <td>Editar / Remover</td>
-                            </tr>
+                            {
+                                this.state.users.map((user, index) => (
+                                    <tr key={index}>
+                                        <th scope="row">{index + 1}</th>
+                                        <td>{user}</td>
+                                        <td>Editar / Remover</td>
+                                    </tr>
+                                ))
+                            }
                         </tbody>
                     </Table>
                 </Container>
@@ -77,5 +86,3 @@ class Usuarios extends Component {
         );
     }
 }
-
-export default Usuarios;
