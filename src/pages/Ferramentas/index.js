@@ -9,7 +9,9 @@ import {
     Input,
 } from 'reactstrap';
 
-export default class Usuarios extends Component {
+import './style.css';
+
+export default class Ferramentas extends Component {
 
     lsUsersKey = 'supera-project-tools';
 
@@ -21,24 +23,43 @@ export default class Usuarios extends Component {
         }
     }
 
+    // function para recuperar os dados salvos
     componentDidMount() {
         const tools = JSON.parse(localStorage.getItem(this.lsUsersKey));
-        if (tools !== null) {
+        if (tools !== null && tools !== undefined) {
             this.setState({
                 tools
             });
         }
     }
 
+    // function para pegar os valores inseridos
     handleSubmit = async (e) => {
         e.preventDefault();
+        
         await this.setState({
             tools: [
                 ...this.state.tools,
                 e.target.elements.tool.value
             ]
         });
+
+        // objeto dos dados que serão salvos
+        // const datas = {
+        //     name: this.state.name
+        // }
+
+        // salvar no localStorage
         localStorage.setItem(this.lsUsersKey, JSON.stringify(this.state.tools));
+        window.location.reload();
+    }
+
+    fRemove = (e) => {
+        let tools = this.state.tools;
+        tools.splice(e, 1);
+        this.setState({
+            tools: tools
+        });
     }
 
     render() {
@@ -71,11 +92,12 @@ export default class Usuarios extends Component {
 
                         <tbody>
                             {
-                                this.state.tools.map((tool, index) => (
-                                    <tr key={index}>
-                                        <th scope="row">{index + 1}</th>
+                                this.state.tools.map((tool, i) => (
+                                    <tr key={i}>
+                                        <th scope="row">{i + 1}</th>
                                         <td>{tool}</td>
-                                        <td>Editar / Remover</td>
+                                        <td><Button color="warning">Editar</Button>
+                                        <Button onClick={()=>this.fRemove(i)} color="danger">Remover</Button></td>
                                     </tr>
                                 ))
                             }

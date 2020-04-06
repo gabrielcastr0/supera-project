@@ -38,7 +38,16 @@ export default class Usuarios extends Component {
                 e.target.elements.userName.value
             ]
         });
+        
         localStorage.setItem(this.lsUsersKey, JSON.stringify(this.state.users));
+    }
+
+    fRemove = (e) => {
+        let users = this.state.users;
+        users.splice(e, 1);
+        this.setState({
+            users: users
+        });
     }
 
     render() {
@@ -71,11 +80,12 @@ export default class Usuarios extends Component {
 
                         <tbody>
                             {
-                                this.state.users.map((user, index) => (
-                                    <tr key={index}>
-                                        <th scope="row">{index + 1}</th>
+                                this.state.users.map((user, i) => (
+                                    <tr key={i}>
+                                        <th scope="row">{i + 1}</th>
                                         <td>{user}</td>
-                                        <td>Editar / Remover</td>
+                                        <td><Button color="warning">Editar</Button>
+                                        <Button onClick={()=>this.fRemove(i)} color="danger">Remover</Button></td>
                                     </tr>
                                 ))
                             }
