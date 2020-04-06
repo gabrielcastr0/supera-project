@@ -36,7 +36,8 @@ export default class Ferramentas extends Component {
     // function para pegar os valores inseridos
     handleSubmit = async (e) => {
         e.preventDefault();
-        
+        let select = document.querySelector("#toolInput");
+
         await this.setState({
             tools: [
                 ...this.state.tools,
@@ -51,16 +52,30 @@ export default class Ferramentas extends Component {
 
         // salvar no localStorage
         localStorage.setItem(this.lsUsersKey, JSON.stringify(this.state.tools));
-        window.location.reload();
+        select.value = "";
+        select.focus();
     }
-
+    
+    // function para remover users
     fRemove = (e) => {
         let tools = this.state.tools;
         tools.splice(e, 1);
         this.setState({
             tools: tools
         });
+
+        localStorage.setItem(this.lsUsersKey, JSON.stringify(this.state.tools));
     }
+
+    // function para editar users
+    fEdit = (e) => {
+        let select = document.querySelector("#toolInput");
+        let tool = this.state.tools[e];
+        select.value = tool;
+
+        select.focus();
+    }
+
 
     render() {
 
@@ -69,9 +84,9 @@ export default class Ferramentas extends Component {
                 <Container className="mt-5">
                     <h3>+Cadastro de Ferramentas</h3>
                     <Form onSubmit={this.handleSubmit}>
-                        <FormGroup>
+                        <FormGroup className="form">
                             <Label for="tool">Ferramenta:</Label>
-                            <Input type="text" name="tool" id="tool" placeholder="Insira um nome de ferramenta"/>
+                            <Input type="text" name="tool" id="toolInput" placeholder="Insira um nome de ferramenta"/>
                         </FormGroup>
                         {/* <FormGroup>
                             <Label for="pass-user">Senha:</Label>
@@ -96,7 +111,7 @@ export default class Ferramentas extends Component {
                                     <tr key={i}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{tool}</td>
-                                        <td><Button color="warning">Editar</Button>
+                                        <td><Button color="warning" onClick={()=>this.fEdit(i)}>Editar</Button>
                                         <Button onClick={()=>this.fRemove(i)} color="danger">Remover</Button></td>
                                     </tr>
                                 ))

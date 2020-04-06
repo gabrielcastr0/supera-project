@@ -1,5 +1,7 @@
 .navbar{
     padding: 30px !important;
+    background: rgb(20,20,20);
+    background: linear-gradient(90deg, rgba(20,20,20,1) 0%, rgba(55,55,55,1) 50%, rgba(20,20,20,1) 100%); 
 }
 
 .nav-item{

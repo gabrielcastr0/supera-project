@@ -21,6 +21,7 @@ export default class Usuarios extends Component {
         }
     }
 
+    // function para obter os users salvos
     componentDidMount() { 
         const users = JSON.parse(localStorage.getItem(this.lsUsersKey));
         if (users !== null) {
@@ -30,8 +31,11 @@ export default class Usuarios extends Component {
         }
     }
 
+    // function para setar (cadastrar) users
     handleSubmit = async (e) => {
         e.preventDefault();
+        let select = document.querySelector("#userInput");
+
         await this.setState({
             users: [
                 ...this.state.users,
@@ -40,14 +44,31 @@ export default class Usuarios extends Component {
         });
         
         localStorage.setItem(this.lsUsersKey, JSON.stringify(this.state.users));
+        select.value = "";
+        select.focus();
     }
 
+    // function para remover users
     fRemove = (e) => {
         let users = this.state.users;
         users.splice(e, 1);
         this.setState({
             users: users
         });
+
+        localStorage.setItem(this.lsUsersKey, JSON.stringify(this.state.users));
+    }
+
+    // function para editar users
+    fEdit = (e) => {
+        let select = document.querySelector("#userInput");
+        let users = this.state.users[e];
+        select.value = users;
+        this.setState({
+            index: e
+        })
+
+        select.focus();
     }
 
     render() {
@@ -59,7 +80,7 @@ export default class Usuarios extends Component {
                     <Form onSubmit={this.handleSubmit}>
                         <FormGroup>
                             <Label for="userName">Usuário:</Label>
-                            <Input type="text" name="userName" id="userName" placeholder="Insira um nome de usuário"/>
+                            <Input type="text" name="userName" id="userInput" className="userInput" placeholder="Insira um nome de usuário"/>
                         </FormGroup>
                         <FormGroup>
                             <Label for="pass-user">Senha:</Label>
@@ -84,7 +105,7 @@ export default class Usuarios extends Component {
                                     <tr key={i}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{user}</td>
-                                        <td><Button color="warning">Editar</Button>
+                                        <td><Button color="warning" onClick={()=>this.fEdit(i)}>Editar</Button>
                                         <Button onClick={()=>this.fRemove(i)} color="danger">Remover</Button></td>
                                     </tr>
                                 ))
