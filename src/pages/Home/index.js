@@ -6,9 +6,10 @@ const Home = () => {
         <div>
             <Jumbotron>
                 <h1 className="display-3">Olá, Supera!</h1>
-                <p className="lead">Este é um layout simples feito com bootstrap usando react.js. Para acessar as telas, clique nos itens que se encontram na navbar.</p>
+                <p className="lead">Este é um layout simples feito com bootstrap usando react.js.</p>
+                <p className="lead">Para acessar as telas, clique nos itens que se encontram no menu.</p>
                 <hr className="my-2" />
-                <p>Assinado por: Gabriel Castro | 2020</p>
+                <p>Feito por: Gabriel Castro | 2020</p>
             </Jumbotron>
         </div>
     );

@@ -1,3 +1,8 @@
 .btn-warning{
     margin-right: 5px;
 }
+
+a.nav-link, a.nav-link:hover{
+    text-decoration: none !important;
+    font-weight: bold;
+}

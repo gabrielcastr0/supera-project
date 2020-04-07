@@ -25,21 +25,23 @@ const Header = () => {
                 <NavbarToggler onClick={toggle} />
                     <Collapse isOpen={isOpen} navbar>
                         <Nav className="mr-auto" navbar>
-                            <Link to="/usuarios">
+                            <Link to="/usuarios" style={{ textDecoration: 'none' }}>
                                 <NavItem>
                                     <NavLink>Usuários</NavLink>
                                 </NavItem>
                             </Link>
 
-                            <Link to="/ferramentas">
+                            <Link to="/ferramentas" style={{ textDecoration: 'none' }}>
                                 <NavItem>
                                     <NavLink>Ferramentas</NavLink>
                                 </NavItem>
                             </Link>
 
-                            <NavItem>
-                                <NavLink>Aluguéis</NavLink>
-                            </NavItem>
+                            <Link to="/alugueis" style={{ textDecoration: 'none' }}>
+                                <NavItem>
+                                    <NavLink>Aluguéis</NavLink>
+                                </NavItem>
+                            </Link>
                         </Nav>
                     </Collapse>
             </Navbar>

@@ -5,6 +5,7 @@ import Home from './pages/Home';
 
 import Usuarios from './pages/Usuarios';
 import Ferramentas from './pages/Ferramentas';
+import Alugueis from './pages/Alugueis';
 
 export default () => {
     return (
@@ -22,6 +23,11 @@ export default () => {
             {/* acessar page ferramentas */}
             <Route exact path="/ferramentas">
                 <Ferramentas />
+            </Route>
+
+            {/* acessar page alugueis */}
+            <Route exact path="/alugueis">
+                <Alugueis />
             </Route>
         </Switch>
     )

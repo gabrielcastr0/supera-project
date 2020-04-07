@@ -13,7 +13,7 @@ import './style.css';
 
 export default class Ferramentas extends Component {
 
-    lsUsersKey = 'supera-project-tools';
+    lsToolsKey = 'supera-project-tools';
 
     constructor(props) {
         super(props);
@@ -25,7 +25,7 @@ export default class Ferramentas extends Component {
 
     // function para recuperar os dados salvos
     componentDidMount() {
-        const tools = JSON.parse(localStorage.getItem(this.lsUsersKey));
+        const tools = JSON.parse(localStorage.getItem(this.lsToolsKey));
         if (tools !== null && tools !== undefined) {
             this.setState({
                 tools
@@ -51,7 +51,7 @@ export default class Ferramentas extends Component {
         // }
 
         // salvar no localStorage
-        localStorage.setItem(this.lsUsersKey, JSON.stringify(this.state.tools));
+        localStorage.setItem(this.lsToolsKey, JSON.stringify(this.state.tools));
         select.value = "";
         select.focus();
     }
@@ -59,12 +59,12 @@ export default class Ferramentas extends Component {
     // function para remover users
     fRemove = (e) => {
         let tools = this.state.tools;
-        tools.splice(e, 1);
+        tools.splice(e, 1); // remove um elemento do índice clicado
         this.setState({
             tools: tools
         });
 
-        localStorage.setItem(this.lsUsersKey, JSON.stringify(this.state.tools));
+        localStorage.setItem(this.lsToolsKey, JSON.stringify(this.state.tools));
     }
 
     // function para editar users
@@ -111,7 +111,7 @@ export default class Ferramentas extends Component {
                                     <tr key={i}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{tool}</td>
-                                        <td><Button color="warning" onClick={()=>this.fEdit(i)}>Editar</Button>
+                                        <td><Button color="warning" onClick={()=>this.fEdit(i)} disabled >Editar (don't work)</Button>
                                         <Button onClick={()=>this.fRemove(i)} color="danger">Remover</Button></td>
                                     </tr>
                                 ))

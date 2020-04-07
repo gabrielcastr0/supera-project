@@ -82,10 +82,10 @@ export default class Usuarios extends Component {
                             <Label for="userName">Usuário:</Label>
                             <Input type="text" name="userName" id="userInput" className="userInput" placeholder="Insira um nome de usuário"/>
                         </FormGroup>
-                        <FormGroup>
+                        {/* <FormGroup>
                             <Label for="pass-user">Senha:</Label>
                             <Input type="password" name="password" id="pass-user" placeholder="Insira uma senha"/>
-                        </FormGroup>
+                        </FormGroup> */}
                         <Button type="submit">Cadastrar</Button>
                     </Form>
 
@@ -105,7 +105,7 @@ export default class Usuarios extends Component {
                                     <tr key={i}>
                                         <th scope="row">{i + 1}</th>
                                         <td>{user}</td>
-                                        <td><Button color="warning" onClick={()=>this.fEdit(i)}>Editar</Button>
+                                        <td><Button color="warning" onClick={()=>this.fEdit(i)} disabled >Editar (don't work)</Button>
                                         <Button onClick={()=>this.fRemove(i)} color="danger">Remover</Button></td>
                                     </tr>
                                 ))
