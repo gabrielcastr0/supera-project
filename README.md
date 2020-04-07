@@ -7,6 +7,7 @@
 ###### Cada tela tem seu form de cadastro, e as telas de usuários e ferramentas possuem uma seção de listagem.
 ###### As telas de usuários e ferramentas também possuem as ações de editar e remover (editar não está funcionando, apenas remover).
 ###### Todos os dados estão sendo salvos no localStorage, em keys diferentes, ou seja, keys diferentes para usuários, ferramentas e aluguéis.
+###### Tem uma pasta chamada mer no projeto que é onde está o MER da primeira questão do desafio.
 ###### Espero que gostem, hehe :)
 
 #### Para rodar o código na máquina de vocês, façam isso:
